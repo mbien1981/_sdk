@@ -10,6 +10,14 @@ if not rawget(_G, "_sdk") then
 		return TimerManager:main():delta_time()
 	end
 
+	function _sdk:current_game_time()
+		return TimerManager:game():time()
+	end
+
+	function _sdk:current_game_delta()
+		return TimerManager:game():delta_time()
+	end
+
 	-- * table utils
 	function _sdk:load_table_from_file(filename)
 		local file = io.open(filename, "r")
