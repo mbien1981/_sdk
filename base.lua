@@ -1,4 +1,6 @@
-local module = DMod:new("_sdk")
+local module = DMod:new("_sdk", {
+	version = 1.1,
+})
 
 -- * libs
 module:hook_pre_require("lib/entry", "lua/guidatamanager")

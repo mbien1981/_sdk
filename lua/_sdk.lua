@@ -229,7 +229,6 @@ if not rawget(_G, "_sdk") then
 	end
 
 	--* gamestate utils
-
 	function _sdk:in_game()
 		if not rawget(_G, "game_state_machine") then
 			return false
@@ -244,5 +243,22 @@ if not rawget(_G, "_sdk") then
 		end
 
 		return BaseNetworkHandler._gamestate_filter.any_ingame_playing[game_state_machine:last_queued_state_name()]
+	end
+
+	--* player stuff
+	function _sdk:player()
+		local player = managers.player and managers.player:player_unit()
+		return alive(player) and player
+	end
+
+	function _sdk:player_movement_state()
+		local unit = self:player()
+		if unit then
+			return unit:movement():current_state()
+		end
+	end
+
+	function _sdk:player_state_name()
+		return managers.player and managers.player:current_state()
 	end
 end
