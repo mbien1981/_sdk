@@ -269,4 +269,45 @@ if not rawget(_G, "_sdk") then
 	function _sdk:player_state_name()
 		return managers.player and managers.player:current_state()
 	end
+
+	--* peer stuff
+	function _sdk:get_peer(peer_id)
+		local session = managers.network and managers.network:session()
+		if session then
+			return session:peer(peer_id)
+		end
+
+		return nil
+	end
+
+	function _sdk:local_peer()
+		local session = managers.network and managers.network:session()
+		if session then
+			return session:local_peer()
+		end
+
+		return nil
+	end
+
+	function _sdk:is_local_peer(peer)
+		local local_peer = self:local_peer()
+
+		if not alive(peer) or not alive(local_peer) then
+			return false
+		end
+
+		---@diagnostic disable-next-line: need-check-nil
+		return peer:id() == local_peer:id()
+	end
+
+	function _sdk:get_ping(peer_id)
+		local peer = self:get_peer(peer_id)
+		if peer and not self:is_local_peer(peer) then
+			local qos = Network.qos and Network:qos(peer:steam_rpc())
+
+			return math.floor(qos.ping)
+		end
+
+		return nil
+	end
 end
