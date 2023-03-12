@@ -1,5 +1,6 @@
 local module = DMod:new("_sdk", {
-	version = 1.2,
+	version = 1.3,
+	allow_globals = true,
 })
 
 -- * libs
