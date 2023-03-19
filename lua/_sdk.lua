@@ -253,6 +253,44 @@ if not rawget(_G, "_sdk") then
 		return BaseNetworkHandler._gamestate_filter.any_ingame_playing[game_state_machine:last_queued_state_name()]
 	end
 
+	--* level id helpers
+	function _sdk:get_level()
+		return Global.level_data and Global.level_data.level_id
+	end
+
+	function _sdk:is_level(level_id)
+		return self:get_level() == level_id
+	end
+
+	--* enemy helpers
+	function _sdk:is_enemy(unit)
+		if not alive(unit) then
+			return false
+		end
+
+		return managers.enemy._enemy_data.unit_data[unit:key()]
+	end
+
+	function _sdk:is_civilian(unit)
+		if not alive(unit) then
+			return false
+		end
+
+		return managers.enemy._civilian_data.unit_data[unit:key()]
+	end
+
+	function _sdk:is_special(unit, include_sniper)
+		local specials = {
+			["shield"] = true,
+			["sniper"] = include_sniper,
+			["spooc"] = true,
+			["taser"] = true,
+			["tank"] = true,
+		}
+
+		return specials[unit:base()._tweak_table]
+	end
+
 	--* player stuff
 	function _sdk:player()
 		local player = managers.player and managers.player:player_unit()

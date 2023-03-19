@@ -1,6 +1,7 @@
 local module = DMod:new("_sdk", {
-	version = 1.3,
+	version = "1.3.1",
 	allow_globals = true,
+	update = { id = "_sdk", url = "https://raw.githubusercontent.com/mbien1981/dahm-modules/main/version.json" },
 })
 
 -- * libs
